@@ -66,39 +66,35 @@
             </plugin>
 
             <!-- JFrog Artifactory Maven Plugin -->
-            <plugin>
-    <groupId>org.jfrog.buildinfo</groupId>
-    <artifactId>artifactory-maven-plugin</artifactId>
-    <version>3.7.0</version>
-    <configuration>
-        <url>http://192.168.1.34:8081/artifactory</url>
-        <repository>
-            <key>testRepo</key>
-            <username>user</username>
-            <password>Password@123</password>
-        </repository>
-        <snapshotRepository>
-            <key>generic-local</key>
-            <username>user</username>
-            <password>Password@123</password>
-        </snapshotRepository>
-        <deployArtifacts>true</deployArtifacts>
-    </configuration>
-    <executions>
-        <execution>
-            <phase>deploy</phase>
-            <goals>
-                <goal>deploy</goal>
-            </goals>
-        </execution>
-        <execution>
-            <id>publish-build-info</id>
-            <goals>
-                <goal>buildInfo</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+           <plugin>
+                <groupId>org.jfrog.buildinfo</groupId>
+                <artifactId>artifactory-maven-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <id>artifactory-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Replace with your Artifactory server URL -->
+                    <contextUrl>http://192.168.1.34:8081/artifactory</contextUrl>
+                    <publishArtifacts>true</publishArtifacts>
+                    <repository>
+                        <key>testRepo</key>
+                        <username>user</username>
+                        <password>Password@123</password>
+                    </repository>
+                    <snapshotRepository>
+                        <key>generic-local</key>
+                        <username>user</username>
+                        <password>Password@123</password>
+                    </snapshotRepository>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
