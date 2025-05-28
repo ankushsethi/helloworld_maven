@@ -64,39 +64,49 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- JFrog Artifactory Maven Plugin -->
-           <plugin>
-                <groupId>org.jfrog.buildinfo</groupId>
-                <artifactId>artifactory-maven-plugin</artifactId>
-                <version>3.6.2</version>
-                <executions>
-                    <execution>
-                        <id>artifactory-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- Replace with your Artifactory server URL -->
-                    <contextUrl>http://192.168.1.34:8081/artifactory</contextUrl>
-                    <publishArtifacts>true</publishArtifacts>
-                    <repository>
-                        <key>testRepo</key>
-                        <username>user</username>
-                        <password>Password@123</password>
-                    </repository>
-                    <snapshotRepository>
-                        <key>generic-local</key>
-                        <username>user</username>
-                        <password>Password@123</password>
-                    </snapshotRepository>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+             <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <!--
+                    In order to allow to install the plugin before using it in deployment,
+                    we activate the 'release' profile only if Artifactory URL is specified.
+                -->
+                <property>
+                    <name>http://192.168.1.34:8081/artifactory/</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jfrog.buildinfo</groupId>
+                        <artifactId>artifactory-maven-plugin</artifactId>
+                        <version>${project.version}</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>build-info</id>
+                                <goals>
+                                    <goal>publish</goal>
+                                </goals>
+                                <configuration>
+                                    <publisher>
+                                        <contextUrl>http://192.168.1.34:8081/artifactory/</contextUrl>
+                                        <username>user</username>
+                                        <password>Password@123</password>
+                                        <repoKey>testRepo</repoKey>
+                                        <snapshotRepoKey>generic-local</snapshotRepoKey>
+                                    </publisher>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+          </profiles>
 
     <!-- Distribution Management Section for Artifact Deployment -->
     <distributionManagement>
