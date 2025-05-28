@@ -72,14 +72,7 @@
         <repository>
             <id>releases</id>
             <name>Release Repository</name>
-            <url>http://192.168.1.28:8081/repository/releases</url>
+            <url>http://192.168.1.34:8081/artifactory/testRepo</url>
         </repository>
-
-        <!-- Configure snapshot repository -->
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>http://192.168.1.28:8081/repository/snapshots</url>
-        </snapshotRepository>
     </distributionManagement>
 </project>
