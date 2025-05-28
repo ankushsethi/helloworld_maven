@@ -75,7 +75,7 @@
                     we activate the 'release' profile only if Artifactory URL is specified.
                 -->
                 <property>
-                    <name>http://192.168.1.34:8081/artifactory/</name>
+                    <name>http://192.168.1.34:8081/artifactory</name>
                 </property>
             </activation>
             <build>
@@ -93,11 +93,11 @@
                                 </goals>
                                 <configuration>
                                     <publisher>
-                                        <contextUrl>http://192.168.1.34:8081/artifactory/</contextUrl>
+                                        <contextUrl>http://192.168.1.34:8081/artifactory</contextUrl>
                                         <username>user</username>
                                         <password>Password@123</password>
                                         <repoKey>testRepo</repoKey>
-                                        <snapshotRepoKey>generic-local</snapshotRepoKey>
+                                        <snapshotRepoKey>testRepo-snapshot</snapshotRepoKey>
                                     </publisher>
                                 </configuration>
                             </execution>
@@ -120,7 +120,7 @@
         <snapshotRepository>
             <id>snapshots</id>
             <name>Snapshot Repository</name>
-            <url>http://192.168.1.34:8081/artifactory/generic-local</url>
+            <url>http://192.168.1.34:8081/artifactory/testRepo-snapshot</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
