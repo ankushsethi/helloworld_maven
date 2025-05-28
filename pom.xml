@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
@@ -41,7 +42,7 @@
                 </configuration>
             </plugin>
             
-            <!-- Shade Plugin to create a fat JAR -->
+            <!-- Shade Plugin (for creating a fat JAR) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -63,6 +64,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- JFrog Artifactory Maven Plugin -->
             <plugin>
                 <groupId>org.jfrog.buildinfo</groupId>
                 <artifactId>artifactory-maven-plugin</artifactId>
@@ -73,42 +76,42 @@
                         <goals>
                             <goal>publish</goal>
                         </goals>
-                        <configuration>
-                            <deployProperties>
-                                <gradle>awesome</gradle>
-                            </deployProperties>
-                            <artifactory>
-                                <includeEnvVars>true</includeEnvVars>
-                                <envVarsExcludePatterns>*password*,*secret*,*key*,*token*,*passphrase*</envVarsExcludePatterns>
-                                <timeoutSec>60</timeoutSec>
-                            </artifactory>
-                            <publisher>
-                                <contextUrl>http://192.168.1.34:8081/artifactory</contextUrl>
-                                <username>user</username>
-                                <password>Password@123</password>
-                                <excludePatterns>*-tests.zip</excludePatterns>
-                                <repoKey>testRepo</repoKey>
-                                <snapshotRepoKey>testRepo</snapshotRepoKey>
-                            </publisher>
-                            <buildInfo>
-                                <buildName>plugin-demo</buildName>
-                                <buildNumber>1.0.0</buildNumber>
-                                <buildUrl>http://build-url.org</buildUrl>
-                            </buildInfo>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <contextUrl>http://192.168.1.34:8081/artifactory</contextUrl>
+                    <deployArtifacts>true</deployArtifacts>
+                    <includeEnvVars>true</includeEnvVars>
+                    <envVarsExcludePatterns>*password*,*secret*,*key*,*token*,*passphrase*</envVarsExcludePatterns>
+                    <publisher>
+                        <!-- Hardcoded Credentials -->
+                        <username>user</username>
+                        <password>Password@123</password>
+                        <repoKey>testRepo</repoKey>
+                        <snapshotRepoKey>testRepo-snapshot</snapshotRepoKey>
+                    </publisher>
+                    <buildInfo>
+                        <buildName>${project.name}</buildName>
+                        <buildNumber>${project.version}</buildNumber>
+                    </buildInfo>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <!-- Add Distribution Management Section -->
+    <!-- Distribution Management Section for Artifact Deployment -->
     <distributionManagement>
-        <!-- Configure release repository -->
+        <!-- Release Repository -->
         <repository>
             <id>releases</id>
             <name>Release Repository</name>
             <url>http://192.168.1.34:8081/artifactory/testRepo</url>
         </repository>
+        <!-- Snapshot Repository -->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>http://192.168.1.34:8081/artifactory/generic-local</url>
+        </snapshotRepository>
     </distributionManagement>
 </project>
