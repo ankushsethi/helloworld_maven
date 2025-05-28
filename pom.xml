@@ -86,9 +86,9 @@
                                 <contextUrl>http://192.168.1.34:8081/artifactory</contextUrl>
                                 <username>user</username>
                                 <password>Password@123</password>
-                                <excludePatterns>*-tests.jar</excludePatterns>
-                                <repoKey>libs-release-local</repoKey>
-                                <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
+                                <excludePatterns>*-tests.zip</excludePatterns>
+                                <repoKey>testRepo</repoKey>
+                                <snapshotRepoKey>testRepo</snapshotRepoKey>
                             </publisher>
                             <buildInfo>
                                 <buildName>plugin-demo</buildName>
