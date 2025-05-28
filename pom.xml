@@ -92,7 +92,7 @@
                             </publisher>
                             <buildInfo>
                                 <buildName>plugin-demo</buildName>
-                                <buildNumber>${buildnumber}</buildNumber>
+                                <buildNumber>1.0.0</buildNumber>
                                 <buildUrl>http://build-url.org</buildUrl>
                             </buildInfo>
                         </configuration>
