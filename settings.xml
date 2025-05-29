@@ -1,0 +1,69 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!-- Local repository location (optional) -->
+    <localRepository>/path/to/local/repository</localRepository>
+    
+    <!-- Server credentials -->
+    <servers>
+        <!-- Add your Artifactory or Maven repository server -->
+        <server>
+            <id>snapshots</id> <!-- This ID matches the POM file's repository 'id' -->
+            <username>user</username>
+            <password>Password@123</password>
+        </server>
+        <server>
+            <id>releases</id> <!-- If you also have a releases repository -->
+            <username>user</username>
+            <password>Password@123</password>
+        </server>
+    </servers>
+
+    <!-- Configure mirrors (optional): Use this to point Maven to the Artifactory proxy for all requests -->
+    <mirrors>
+        <mirror>
+            <id>artifactory-mirror</id>
+            <mirrorOf>*</mirrorOf> <!-- Mirrors all repositories -->
+            <url>http://192.168.1.34:8081/artifactory</url>
+        </mirror>
+    </mirrors>
+
+    <!-- Profiles: Define default repositories and properties -->
+    <profiles>
+        <profile>
+            <id>artifactory</id> <!-- Profile ID -->
+            <repositories>
+                <repository>
+                    <id>snapshots</id>
+                    <url>http://192.168.1.34:8081/artifactory/testRepo-snapshot</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>releases</id>
+                    <url>http://192.168.1.34:8081/artifactory/testRepo</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- Actively use the defined profiles -->
+    <activeProfiles>
+        <activeProfile>artifactory</activeProfile>
+    </activeProfiles>
+</settings>
